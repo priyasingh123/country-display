@@ -7,7 +7,50 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.country-heading{
+  font-size: 3rem;
+}
+
+@media (max-width: 768px) {
+  .country-heading{
+    font-size: 2rem;
+  }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.country-board{
+  border: 2px solid red;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.country-card{
+  border: solid 2px #e4efeb;
+  margin: 4px;
+  box-shadow: 2px 3px grey;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.country-card > img{
+  width:10rem;
+}
+
+.input-country{
+  display: block;
+  margin: 1rem auto;
+  width: 14rem;
+  height: 2rem;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  padding: 0.25rem 1rem;
+}
+
+.input-country:focus{
+  
 }
