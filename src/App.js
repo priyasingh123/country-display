@@ -6,11 +6,12 @@ import DisplayCountries from './components/DisplayCountries';
 
 function App() {
   const [results, setResults] = useState(null)
+  const[showInfo, setShowInfo] = useState(false)
 
   return (
     <div className="App">
-      <SearchBar setResults={setResults}/>
-      {results && <DisplayCountries results={results}/>}
+      <SearchBar setResults={setResults} setShowInfo={setShowInfo}/>
+      {results && <DisplayCountries results={results} setShowInfo={setShowInfo} showInfo={showInfo}/>}
       
     </div>
   );

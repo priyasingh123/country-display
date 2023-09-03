@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react'
 
-const SearchBar = ({setResults}) => {
+const SearchBar = ({setResults, setShowInfo}) => {
     const [inputVal, setInputVal] = useState ('')
     const url = "https://restcountries.com/v3.1/name/"
 
@@ -14,6 +14,7 @@ const SearchBar = ({setResults}) => {
                 console.log ('res ',res.status)
                 const response = await res.json()
                 console.log (response)
+                setShowInfo(false)
                 setResults(response)
             } catch (error) {
                 console.log ('No results')

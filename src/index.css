@@ -7,6 +7,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+p{
+  margin: 0;
+}
+
 .country-heading{
   font-size: 3rem;
 }
@@ -23,13 +27,13 @@ code {
 }
 
 .country-board{
-  border: 2px solid red;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .country-card{
+  position:relative;
   border: solid 2px #e4efeb;
   margin: 4px;
   box-shadow: 2px 3px grey;
@@ -39,6 +43,12 @@ code {
 
 .country-card > img{
   width:10rem;
+}
+
+.country-details > img{
+  width:10rem;
+  margin:auto;
+  border: black 2px solid;
 }
 
 .input-country{
@@ -51,6 +61,32 @@ code {
   padding: 0.25rem 1rem;
 }
 
-.input-country:focus{
-  
+.badge{
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+  color: white;
+  border-radius: 13px;
+  border: none;
+  cursor: pointer;
+}
+
+.badge:hover{
+  transform: scale(1.25)
+}
+
+.country-details{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.more-info{
+  height: 1.75rem;
+  border-radius: 5px;
+  background-color: #3cadec;
+  color: white;
+  border: white;
+  margin-top:0.75rem;
 }
