@@ -1,6 +1,11 @@
 const CountryDetails = ({countryDetails}) => {
     console.log ('countyr',countryDetails[0])
     let detail = countryDetails[0]
+
+    const visitMap = (link) => {
+        window.open(link, '_blank')
+    }
+
     return (
         <div className="country-details">
             <h3>{detail?.name?.common}</h3>
@@ -17,6 +22,7 @@ const CountryDetails = ({countryDetails}) => {
             <p>Borders With: <strong>{detail?.borders?.map((border) => <span>{border} </span>)}</strong></p>
             <p>Is LandLocked ? <strong>{detail?.landlocked ? 'Yes' :'No'}</strong></p>
             <p>Location: <strong>latitude: {detail?.latlng[0]}, longtitude: {detail?.latlng[1]}</strong></p>
+            <button className="badge" onClick={()=>visitMap(detail?.maps?.googleMaps)}>See on Map</button>
         </div>
     )
 }

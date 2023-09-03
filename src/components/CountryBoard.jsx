@@ -14,7 +14,7 @@ const CountryBoard = ({results, setShowInfo, setCountryDetails}) => {
             {results?.map ((country) => {
                 return (
                     <div key={country.name.common} className="country-card">
-                        <button className="badge" onClick={()=>visitMap(country?.maps?.googleMaps)}>See on Map</button>
+                        <button className="badge top-right" onClick={()=>visitMap(country?.maps?.googleMaps)}>See on Map</button>
                         <h3 >{country.name.common}</h3>
                         <img src={country.flags.png} alt={`flag of ${country.name.common}`}/>
                         <p>Capital: <strong>{country?.capital}</strong></p>

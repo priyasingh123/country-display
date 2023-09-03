@@ -61,15 +61,20 @@ code {
   padding: 0.25rem 1rem;
 }
 
-.badge{
+.top-right{
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.badge{
   background: red;
   color: white;
   border-radius: 13px;
   border: none;
   cursor: pointer;
+  width: fit-content;
+    margin: auto;
 }
 
 .badge:hover{
