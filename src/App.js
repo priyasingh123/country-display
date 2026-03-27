@@ -29,6 +29,10 @@ function App() {
           
           </>)
         },
+        {
+          path: "/country-display/:countryName",
+          element: <CountryDetails countryDetails={[]} />
+        }
       ]
     }
   ]);

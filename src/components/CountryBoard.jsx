@@ -1,12 +1,14 @@
+import { useNavigate } from 'react-router-dom';
+
 const CountryBoard = ({results, setShowInfo, setCountryDetails}) => {
+    const navigate = useNavigate();
+    
     const visitMap = (link) => {
         window.open(link, '_blank')
     }
 
     const handleMoreInfo = (info) => {
-        setShowInfo(true)
-        console.log ('info', [info])
-        setCountryDetails([info])
+        navigate(`/country-display/${info.name.common}`, { state: { countryDetails: [info] } });
     }
 
     return (

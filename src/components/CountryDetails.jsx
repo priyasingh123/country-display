@@ -1,6 +1,9 @@
+import { useLocation } from 'react-router-dom';
+
 const CountryDetails = ({countryDetails}) => {
-    console.log ('countyr',countryDetails[0])
-    let detail = countryDetails[0]
+    const location = useLocation();
+    const detail = location.state?.countryDetails?.[0] || countryDetails[0];
+    console.log ('countyr',detail)
 
     const visitMap = (link) => {
         window.open(link, '_blank')
