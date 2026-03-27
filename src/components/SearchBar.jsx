@@ -42,7 +42,7 @@ const SearchBar = ({setResults, setShowInfo}) => {
 
     return (
         <div>
-            <label className="country-heading">Which Country are you looking for ? </label>
+            <label className="country-heading">Start Typing Country Name... </label>
             <input className="input-country" type="text" placeholder="Search..." onChange={handleChange} value={inputVal}/>
             
         </div>
