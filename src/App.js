@@ -3,11 +3,12 @@ import SearchBar from './components/SearchBar'
 import {useState} from 'react'
 import DisplayCountries from './components/DisplayCountries';
 import CountryDetails from './components/CountryDetails';
-import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 
-const AppLayout = () => {
+const AppLayout = ({ setResults, results }) => {
   return (
     <div className='App'>
+      <SearchBar setResults={setResults}/>
       <Outlet />
     </div>
   )
@@ -18,15 +19,19 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <AppLayout/>,
+      element: <AppLayout setResults={setResults} results={results} />,
       children:[
         {
+          path: "/",
+          element: <Navigate to="/country-display" replace />
+        },
+        {
           path: "/country-display",
-          element: (<>
-            <SearchBar setResults={setResults}/>
-            {results && <DisplayCountries results={results} />}
-          
-          </>)
+          element: (
+            <>
+              {results && <DisplayCountries results={results} setResults={setResults} />}
+            </>
+          )
         },
         {
           path: "/country-display/:countryName",

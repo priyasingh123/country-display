@@ -1,7 +1,9 @@
 import {useState, useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const SearchBar = ({setResults}) => {
     const [inputVal, setInputVal] = useState ('');
+    const navigate = useNavigate();
     const url = "https://restcountries.com/v3.1/name/";
 
     useEffect(() => {
@@ -13,13 +15,10 @@ const SearchBar = ({setResults}) => {
                     if (!res.ok) {
                         throw new Error ()
                     }
-                    console.log ('res ',res.status)
                     const response = await res.json()
-                    console.log (response)
                     setResults(response);
                 } catch (error) {
                     if (error.name !== 'AbortError') {
-                        console.log ('No results')
                         setResults([])
                     }
                 }
@@ -37,14 +36,17 @@ const SearchBar = ({setResults}) => {
 
 
     const handleChange = (e) => {
-        setInputVal(e.target.value)
+        const value = e.target.value;
+        setInputVal(value);
+        if (value.trim()) {
+            navigate('/country-display');
+        }
     }
 
     return (
         <div>
             <label className="country-heading">Start Typing Country Name... </label>
             <input className="input-country" type="text" placeholder="Search..." onChange={handleChange} value={inputVal}/>
-            
         </div>
     )
 }
