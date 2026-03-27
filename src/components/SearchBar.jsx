@@ -9,7 +9,7 @@ const SearchBar = ({setResults}) => {
     useEffect(() => {
         const controller = new AbortController();
         const timer = setTimeout(async () => {
-            if (inputVal) {
+            if (inputVal.trim()) {
                 try {
                     const res = await fetch(`${url}${inputVal}`, { signal: controller.signal })
                     if (!res.ok) {
@@ -24,7 +24,7 @@ const SearchBar = ({setResults}) => {
                 }
             }
             else {
-                setResults([])
+                setResults(null)
             }
         }, 400)
 
