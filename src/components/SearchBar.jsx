@@ -1,37 +1,38 @@
 import {useState, useEffect} from 'react'
 
 const SearchBar = ({setResults}) => {
-    const [inputVal, setInputVal] = useState ('')
+    const [inputVal, setInputVal] = useState ('');
     const url = "https://restcountries.com/v3.1/name/";
 
-    const getData = async() => {
-        if (inputVal) {
-            try {
-                const res = await fetch(`${url}${inputVal}`)
-                if (!res.ok) {
-                    throw new Error ()
+    useEffect(() => {
+        const controller = new AbortController();
+        const timer = setTimeout(async () => {
+            if (inputVal) {
+                try {
+                    const res = await fetch(`${url}${inputVal}`, { signal: controller.signal })
+                    if (!res.ok) {
+                        throw new Error ()
+                    }
+                    console.log ('res ',res.status)
+                    const response = await res.json()
+                    console.log (response)
+                    setResults(response);
+                } catch (error) {
+                    if (error.name !== 'AbortError') {
+                        console.log ('No results')
+                        setResults([])
+                    }
                 }
-                console.log ('res ',res.status)
-                const response = await res.json()
-                console.log (response)
-                setResults(response)
-            } catch (error) {
-                console.log ('No results')
+            }
+            else {
                 setResults([])
             }
-        }
-        else {
-            setResults('')
-        }
-    }
-
-    useEffect(() => {
-        let timer
-        timer = setTimeout(() => {
-            getData()
         }, 400)
 
-        return ()=> {clearTimeout(timer)}
+        return ()=> {
+            clearTimeout(timer);
+            controller.abort();
+        }
     }, [inputVal])
 
 

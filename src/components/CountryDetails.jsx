@@ -10,16 +10,22 @@ const CountryDetails = ({countryDetails}) => {
         // If detail is not available from state, fetch from API
         if (!detail && countryName) {
             setLoading(true);
-            fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+            const controller = new AbortController();
+            
+            fetch(`https://restcountries.com/v3.1/name/${countryName}`, { signal: controller.signal })
                 .then(res => res.json())
                 .then(data => {
                     setDetail(data[0]);
                     setLoading(false);
                 })
                 .catch(err => {
-                    console.error('Error fetching country:', err);
-                    setLoading(false);
+                    if (err.name !== 'AbortError') {
+                        console.error('Error fetching country:', err);
+                        setLoading(false);
+                    }
                 });
+            
+            return () => controller.abort();
         }
     }, [countryName, detail]);
 
