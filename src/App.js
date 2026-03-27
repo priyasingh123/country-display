@@ -14,7 +14,6 @@ const AppLayout = () => {
 }
 function App() {
   const [results, setResults] = useState(null)
-  const[showInfo, setShowInfo] = useState(false)
 
   const router = createBrowserRouter([
     {
@@ -24,8 +23,8 @@ function App() {
         {
           path: "/country-display",
           element: (<>
-            <SearchBar setResults={setResults} setShowInfo={setShowInfo} />
-            {results && <DisplayCountries results={results} showInfo={showInfo} setShowInfo={setShowInfo} />}
+            <SearchBar setResults={setResults}/>
+            {results && <DisplayCountries results={results} />}
           
           </>)
         },
