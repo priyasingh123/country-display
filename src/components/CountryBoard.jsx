@@ -1,4 +1,3 @@
-
 const CountryBoard = ({ results }) => {
   const visitMap = (link) => {
     if (link) {
@@ -7,70 +6,94 @@ const CountryBoard = ({ results }) => {
   };
 
   return (
-    <div className="country-board">
+    <div className="country-board" role="list" aria-label="list of countries">
       {results?.map((country) => {
         const currency = country?.currencies
           ? Object.values(country.currencies)[0]
           : null;
 
         return (
-          <div key={country.name.common} className="country-card">
-            
+          <article
+            key={country.name.common}
+            className="country-card"
+            role="listitem"
+            aria-labelledby={`country-${country.name.common}`}
+          >
             {/* Map Button */}
-            <button
+            <a
               className="badge top-right"
-              onClick={() => visitMap(country?.maps?.googleMaps)}
+              href={country?.maps?.googleMaps}
+              target="_blank"
+              aria-label={`Open ${country.name.common} on Google Maps (opens in new tab)`}
+              rel="noreferrer"
             >
               See on Map
-            </button>
+            </a>
 
             {/* Title */}
-            <h3>{country.name.common}</h3>
+            <h3 id={`country-${country.name.common}`}>{country.name.common}</h3>
 
             {/* Flag */}
             <img
               src={country.flags.png}
               alt={`flag of ${country.name.common}`}
+              loading="lazy"
             />
 
             {/* Details */}
-            <p>
-              Capital: <strong>{country?.capital?.[0] || "--"}</strong>
-            </p>
+            <dl>
+              <div style={{ display: "flex" }}>
+                <dt>Capital</dt>
+                <dd>
+                  <strong>{country?.capital?.[0] || "--"}</strong>
+                </dd>
+              </div>
 
-            <p>
-              Currency:{" "}
-              <strong>
-                {currency
-                  ? `${currency.name} (${currency.symbol})`
-                  : "--"}
-              </strong>
-            </p>
+              <div style={{ display: "flex" }}>
+                <dt>Currency</dt>
+                <dd>
+                  <strong>
+                    {currency ? `${currency.name} (${currency.symbol})` : "--"}
+                  </strong>
+                </dd>
+              </div>
 
-            <p>
-              Region: <strong>{country?.region || "--"}</strong>
-            </p>
+              <div style={{ display: "flex" }}>
+                <dt>Region</dt>
 
-            <p>
-              Area: <strong>{country?.area || "--"}</strong>
-            </p>
+                <dd>
+                  <strong>{country?.region || "--"}</strong>
+                </dd>
+              </div>
 
-            <p>
-              Population: <strong>{country?.population || "--"}</strong>
-            </p>
+              <div style={{ display: "flex" }}>
+                <dt>Area</dt>
+                <dd>
+                  <strong>{country?.area || "--"}</strong>
+                </dd>
+              </div>
 
-            {/* ✅ Open in new tab */}
+              <div style={{ display: "flex" }}>
+                <dt>Population</dt>
+                <dd>
+                  <strong>
+                    {country?.population.toLocaleString() || "--"}
+                  </strong>
+                </dd>
+              </div>
+            </dl>
+
             <a
               className="more-info"
               href={`#/country-display/${encodeURIComponent(
-                country.name.common
+                country.name.common,
               )}`}
               target="_blank"
               rel="noopener noreferrer"
             >
               More Info
             </a>
-          </div>
+          </article>
         );
       })}
     </div>
