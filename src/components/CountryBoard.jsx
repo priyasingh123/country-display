@@ -1,34 +1,80 @@
 
-import { useNavigate } from "react-router-dom"
-const CountryBoard = ({results}) => {
-    const navigate = useNavigate();
-    const visitMap = (link) => {
-        window.open(link, '_blank')
+const CountryBoard = ({ results }) => {
+  const visitMap = (link) => {
+    if (link) {
+      window.open(link, "_blank", "noopener,noreferrer");
     }
+  };
 
-    const handleMoreInfo = (info) => {
-        navigate(`/country-display/${encodeURIComponent(info.name.common)}`, { state: { countryDetails: [info] } });
-    }
+  return (
+    <div className="country-board">
+      {results?.map((country) => {
+        const currency = country?.currencies
+          ? Object.values(country.currencies)[0]
+          : null;
 
-    return (
-        <div className="country-board">
-            {results?.map ((country) => {
-                return (
-                    <div key={country.name.common} className="country-card">
-                        <button className="badge top-right" onClick={()=>visitMap(country?.maps?.googleMaps)}>See on Map</button>
-                        <h3 >{country.name.common}</h3>
-                        <img src={country.flags.png} alt={`flag of ${country.name.common}`}/>
-                        <p>Capital: <strong>{country?.capital}</strong></p>
-                        <p>Currency: {<strong>{country?.currencies ?`${Object.values(country?.currencies)[0]?.name} (${Object.values(country?.currencies)[0]?.symbol})`: '--'}</strong>}</p>
-                        <p>Region: <strong>{country?.region}</strong></p>
-                        <p>Area: <strong>{country?.area}</strong></p>
-                        <p>Population: <strong>{country?.population}</strong></p>
-                        <button className="more-info" onClick={()=>handleMoreInfo(country)}>More Info</button>
-                    </div>
-                )
-            })}
-        </div>
-    )
-}
+        return (
+          <div key={country.name.common} className="country-card">
+            
+            {/* Map Button */}
+            <button
+              className="badge top-right"
+              onClick={() => visitMap(country?.maps?.googleMaps)}
+            >
+              See on Map
+            </button>
 
-export default CountryBoard
+            {/* Title */}
+            <h3>{country.name.common}</h3>
+
+            {/* Flag */}
+            <img
+              src={country.flags.png}
+              alt={`flag of ${country.name.common}`}
+            />
+
+            {/* Details */}
+            <p>
+              Capital: <strong>{country?.capital?.[0] || "--"}</strong>
+            </p>
+
+            <p>
+              Currency:{" "}
+              <strong>
+                {currency
+                  ? `${currency.name} (${currency.symbol})`
+                  : "--"}
+              </strong>
+            </p>
+
+            <p>
+              Region: <strong>{country?.region || "--"}</strong>
+            </p>
+
+            <p>
+              Area: <strong>{country?.area || "--"}</strong>
+            </p>
+
+            <p>
+              Population: <strong>{country?.population || "--"}</strong>
+            </p>
+
+            {/* ✅ Open in new tab */}
+            <a
+              className="more-info"
+              href={`#/country-display/${encodeURIComponent(
+                country.name.common
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              More Info
+            </a>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export default CountryBoard;

@@ -3,7 +3,7 @@ import SearchBar from './components/SearchBar'
 import {useState} from 'react'
 import DisplayCountries from './components/DisplayCountries';
 import CountryDetails from './components/CountryDetails';
-import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
+import { createHashRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 
 const AppLayout = ({ setResults, results }) => {
   return (
@@ -16,7 +16,7 @@ const AppLayout = ({ setResults, results }) => {
 function App() {
   const [results, setResults] = useState(null)
 
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       path: "/",
       element: <AppLayout setResults={setResults} results={results} />,
