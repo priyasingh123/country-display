@@ -1,28 +1,18 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchCountries } from "../service/restCountry";
 
 const SearchBar = ({ setResults }) => {
   const [inputVal, setInputVal] = useState("");
   const navigate = useNavigate();
-  const url = new URL(process.env.REACT_APP_BASEURL);
 
   useEffect(() => {
     const controller = new AbortController();
     const timer = setTimeout(async () => {
       if (inputVal.trim()) {
         try {
-          url.searchParams.set("q", inputVal.toString().toLowerCase());
-          const res = await fetch(url, {
-            headers: {
-              Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
-            },
-            signal: controller.signal,
-          });
-          if (!res.ok) {
-            throw new Error();
-          }
-          const response = await res.json();
-          setResults(response.data.objects);
+          const res = await fetchCountries(inputVal, controller);
+          setResults(res);
         } catch (error) {
           if (error.name !== "AbortError") {
             setResults([]);

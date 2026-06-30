@@ -1,4 +1,6 @@
-const CountryBoard = ({ results }) => {
+import { Link } from "react-router-dom";
+
+const CountryBoard = ({ results, setCountryDetails }) => {
   const visitMap = (link) => {
     if (link) {
       window.open(link, "_blank", "noopener,noreferrer");
@@ -84,17 +86,13 @@ const CountryBoard = ({ results }) => {
                 </dd>
               </div>
             </dl>
-
-            <a
+            <Link
               className="more-info"
-              href={`#/country-display/${encodeURIComponent(
-                country.names.common,
-              )}`}
+              to={`/country-display/${encodeURIComponent(country.names.common)}`}
               target="_blank"
-              rel="noopener noreferrer"
             >
               More Info
-            </a>
+            </Link>
           </article>
         );
       })}
