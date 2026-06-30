@@ -14,29 +14,31 @@ const CountryBoard = ({ results }) => {
 
         return (
           <article
-            key={country.name.common}
+            key={country.names.common}
             className="country-card"
             role="listitem"
-            aria-labelledby={`country-${country.name.common}`}
+            aria-labelledby={`country-${country.names.common}`}
           >
             {/* Map Button */}
             <a
               className="badge top-right"
               href={country?.maps?.googleMaps}
               target="_blank"
-              aria-label={`Open ${country.name.common} on Google Maps (opens in new tab)`}
+              aria-label={`Open ${country.names.common} on Google Maps (opens in new tab)`}
               rel="noreferrer"
             >
               See on Map
             </a>
 
             {/* Title */}
-            <h3 id={`country-${country.name.common}`}>{country.name.common}</h3>
+            <h3 id={`country-${country.names.common}`}>
+              {country.names.common}
+            </h3>
 
             {/* Flag */}
             <img
-              src={country.flags.png}
-              alt={`flag of ${country.name.common}`}
+              src={country.flag.url_png}
+              alt={`flag of ${country.names.common}`}
               loading="lazy"
             />
 
@@ -45,7 +47,7 @@ const CountryBoard = ({ results }) => {
               <div style={{ display: "flex" }}>
                 <dt>Capital</dt>
                 <dd>
-                  <strong>{country?.capital?.[0] || "--"}</strong>
+                  <strong>{country?.capitals?.[0].name || "--"}</strong>
                 </dd>
               </div>
 
@@ -69,7 +71,7 @@ const CountryBoard = ({ results }) => {
               <div style={{ display: "flex" }}>
                 <dt>Area</dt>
                 <dd>
-                  <strong>{country?.area || "--"}</strong>
+                  <strong>{country?.area.kilometers || "--"}Km</strong>
                 </dd>
               </div>
 
@@ -86,7 +88,7 @@ const CountryBoard = ({ results }) => {
             <a
               className="more-info"
               href={`#/country-display/${encodeURIComponent(
-                country.name.common,
+                country.names.common,
               )}`}
               target="_blank"
               rel="noopener noreferrer"
