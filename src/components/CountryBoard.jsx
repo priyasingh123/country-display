@@ -24,7 +24,7 @@ const CountryBoard = ({ results, setCountryDetails }) => {
             {/* Map Button */}
             <a
               className="badge top-right"
-              href={country?.maps?.googleMaps}
+              href={country?.links?.google_maps}
               target="_blank"
               aria-label={`Open ${country.names.common} on Google Maps (opens in new tab)`}
               rel="noreferrer"

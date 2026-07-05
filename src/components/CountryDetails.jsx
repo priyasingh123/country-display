@@ -113,7 +113,7 @@ const CountryDetails = () => {
           </p>
           <button
             className="badge"
-            onClick={() => visitMap(detail?.maps?.googleMaps)}
+            onClick={() => visitMap(detail?.links?.google_maps)}
           >
             See on Map
           </button>
