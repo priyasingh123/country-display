@@ -49,7 +49,7 @@ const CountryBoard = ({ results, setCountryDetails }) => {
               <div style={{ display: "flex" }}>
                 <dt>Capital</dt>
                 <dd>
-                  <strong>{country?.capitals?.[0].name || "--"}</strong>
+                  <strong>{country?.capitals?.[0]?.name || "--"}</strong>
                 </dd>
               </div>
 
