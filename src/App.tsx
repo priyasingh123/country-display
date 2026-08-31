@@ -1,6 +1,6 @@
 import "./App.css";
 import SearchBar from "./components/SearchBar";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import DisplayCountries from "./components/DisplayCountries";
 import CountryDetails from "./components/CountryDetails";
 import {
@@ -9,8 +9,13 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
+import { Country } from "./service/restCountry";
 
-const AppLayout = ({ setResults, results }) => {
+const AppLayout = ({
+  setResults,
+}: {
+  setResults: Dispatch<SetStateAction<Country[]>>;
+}) => {
   return (
     <div className="App">
       <SearchBar setResults={setResults} />
@@ -19,12 +24,12 @@ const AppLayout = ({ setResults, results }) => {
   );
 };
 function App() {
-  const [results, setResults] = useState(null);
+  const [results, setResults] = useState<Country[]>([]);
 
   const router = createHashRouter([
     {
       path: "/",
-      element: <AppLayout setResults={setResults} results={results} />,
+      element: <AppLayout setResults={setResults} />,
       children: [
         {
           path: "/",
@@ -32,13 +37,7 @@ function App() {
         },
         {
           path: "/country-display",
-          element: (
-            <>
-              {results && (
-                <DisplayCountries results={results} setResults={setResults} />
-              )}
-            </>
-          ),
+          element: <>{<DisplayCountries results={results} />}</>,
         },
         {
           path: "/country-display/:countryName",

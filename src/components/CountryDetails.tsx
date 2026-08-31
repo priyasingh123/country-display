@@ -1,27 +1,31 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { fetchCountries } from "../service/restCountry";
+import { type Country, fetchCountries } from "../service/restCountry";
 
 const CountryDetails = () => {
   const { countryName } = useParams();
-  const [detail, setDetail] = useState(null);
+  const [detail, setDetail] = useState<Country | null>(null);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setLoading(true);
     const controller = new AbortController();
     const fetchCountryDetails = async () => {
       try {
-        const res = await fetchCountries(countryName, controller);
+        const res = await fetchCountries(countryName || "", controller);
         if (res.length > 1) {
           const exactMatch = res.find(
             (country) =>
-              country.names.common.toLowerCase() === countryName.toLowerCase(),
+              country.names.common.toLowerCase() === countryName?.toLowerCase(),
           );
           console.log("Exact match:", exactMatch);
-          setDetail(exactMatch || res[0]);
-        } else setDetail(res[0]);
+          if (exactMatch) {
+            setDetail(exactMatch);
+          } else {
+            setDetail(res[0] || null);
+          }
+        } else setDetail(res[0] || null);
       } catch (error) {
-        if (error.name !== "AbortError") {
+        if (error instanceof Error && error.name === "AbortError") {
           setDetail(null);
         }
       } finally {
@@ -34,7 +38,7 @@ const CountryDetails = () => {
     };
   }, [countryName]);
 
-  const visitMap = (link) => {
+  const visitMap = (link: string) => {
     window.open(link, "_blank");
   };
 
@@ -44,7 +48,6 @@ const CountryDetails = () => {
   const currencies = detail?.currencies ? Object.values(detail.currencies) : [];
   const borders = detail?.borders || [];
   const timezones = detail?.timezones || [];
-  const latlng = detail?.latlng || [];
 
   return (
     <div className="country-details">
@@ -88,9 +91,7 @@ const CountryDetails = () => {
             Population:{" "}
             <strong>{detail?.population.toLocaleString() ?? "N/A"}</strong>
           </p>
-          <p>
-            Is UN member: <strong>{detail?.unMember ? "Yes" : "No"}</strong>
-          </p>
+
           <p>
             Timezones: <strong>{timezones.join(", ") || "N/A"}</strong>
           </p>
@@ -104,12 +105,6 @@ const CountryDetails = () => {
           </p>
           <p>
             Is LandLocked ? <strong>{detail?.landlocked ? "Yes" : "No"}</strong>
-          </p>
-          <p>
-            Location:{" "}
-            <strong>
-              latitude: {latlng[0] ?? "N/A"}, longitude: {latlng[1] ?? "N/A"}
-            </strong>
           </p>
           <button
             className="badge"

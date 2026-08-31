@@ -1,12 +1,7 @@
 import { Link } from "react-router-dom";
+import type { Country } from "../service/restCountry";
 
-const CountryBoard = ({ results, setCountryDetails }) => {
-  const visitMap = (link) => {
-    if (link) {
-      window.open(link, "_blank", "noopener,noreferrer");
-    }
-  };
-
+const CountryBoard = ({ results }: { results: Country[] | [] }) => {
   return (
     <div className="country-board" role="list" aria-label="list of countries">
       {results?.map((country) => {

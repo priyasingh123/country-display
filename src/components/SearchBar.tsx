@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchCountries } from "../service/restCountry";
+import { type Country, fetchCountries } from "../service/restCountry";
 
-const SearchBar = ({ setResults }) => {
-  const [inputVal, setInputVal] = useState("");
+interface SearchBarProps {
+  setResults: Dispatch<SetStateAction<Country[]>>;
+}
+
+const SearchBar = ({ setResults }: SearchBarProps) => {
+  const [inputVal, setInputVal] = useState<string>("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,12 +18,12 @@ const SearchBar = ({ setResults }) => {
           const res = await fetchCountries(inputVal, controller);
           setResults(res);
         } catch (error) {
-          if (error.name !== "AbortError") {
+          if (error instanceof Error && error.name !== "AbortError") {
             setResults([]);
           }
         }
       } else {
-        setResults(null);
+        setResults([]);
       }
     }, 400);
 
@@ -27,9 +31,10 @@ const SearchBar = ({ setResults }) => {
       clearTimeout(timer);
       controller.abort();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputVal]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputVal(value);
     if (value.trim()) {
