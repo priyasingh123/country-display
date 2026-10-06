@@ -13,23 +13,37 @@ import { Country } from "./service/restCountry";
 
 const AppLayout = ({
   setResults,
+  setInputVal,
+  inputVal,
 }: {
   setResults: Dispatch<SetStateAction<Country[]>>;
+  setInputVal: Dispatch<SetStateAction<string>>;
+  inputVal: string;
 }) => {
   return (
     <div className="App">
-      <SearchBar setResults={setResults} />
+      <SearchBar
+        setResults={setResults}
+        setInputVal={setInputVal}
+        inputVal={inputVal}
+      />
       <Outlet />
     </div>
   );
 };
 function App() {
   const [results, setResults] = useState<Country[]>([]);
-
+  const [inputVal, setInputVal] = useState<string>("");
   const router = createHashRouter([
     {
       path: "/",
-      element: <AppLayout setResults={setResults} />,
+      element: (
+        <AppLayout
+          setResults={setResults}
+          setInputVal={setInputVal}
+          inputVal={inputVal}
+        />
+      ),
       children: [
         {
           path: "/",
@@ -37,7 +51,9 @@ function App() {
         },
         {
           path: "/country-display",
-          element: <>{<DisplayCountries results={results} />}</>,
+          element: (
+            <>{<DisplayCountries results={results} inputVal={inputVal} />}</>
+          ),
         },
         {
           path: "/country-display/:countryName",

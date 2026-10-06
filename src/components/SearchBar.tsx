@@ -1,13 +1,14 @@
-import { useState, useEffect, SetStateAction, Dispatch } from "react";
+import { useEffect, SetStateAction, Dispatch } from "react";
 import { useNavigate } from "react-router-dom";
 import { type Country, fetchCountries } from "../service/restCountry";
 
 interface SearchBarProps {
   setResults: Dispatch<SetStateAction<Country[]>>;
+  setInputVal: Dispatch<SetStateAction<string>>;
+  inputVal: string;
 }
 
-const SearchBar = ({ setResults }: SearchBarProps) => {
-  const [inputVal, setInputVal] = useState<string>("");
+const SearchBar = ({ setResults, setInputVal, inputVal }: SearchBarProps) => {
   const navigate = useNavigate();
 
   useEffect(() => {

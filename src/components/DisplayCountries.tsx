@@ -1,10 +1,16 @@
 import CountryBoard from "./CountryBoard";
 import { Country } from "../service/restCountry";
 
-const DisplayCountries = ({ results }: { results: Country[] | [] }) => {
+const DisplayCountries = ({
+  results,
+  inputVal,
+}: {
+  results: Country[] | [];
+  inputVal: string;
+}) => {
   return (
     <div>
-      {results === null ? null : results?.length === 0 ? (
+      {!!inputVal && results?.length === 0 ? (
         <p>No Matching Results</p>
       ) : (
         <CountryBoard results={results} />
